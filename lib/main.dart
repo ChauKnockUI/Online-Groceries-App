@@ -15,7 +15,12 @@ class MyApp extends StatefulWidget {
 class _MyWidgetState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
+    
     return MaterialApp(
+      theme: ThemeData(
+        fontFamily: 'Roboto', // Đặt font mặc định
+        primarySwatch: Colors.blue,
+      ),
       home: Login()
     );
   }
