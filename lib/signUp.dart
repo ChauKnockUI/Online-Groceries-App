@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:training_project/signUp.dart';
+import 'package:training_project/login.dart';
 
 
-class Login extends StatefulWidget {
-  const Login({super.key});
+class SignUp extends StatefulWidget {
+  const SignUp({super.key});
 
   @override
-  State<Login> createState() => _LoginWidgetState();
+  State<SignUp> createState() => _SignUpWidgetState();
 }
 
-class _LoginWidgetState extends State<Login> {
+class _SignUpWidgetState extends State<SignUp> {
   bool showPassword = false;
   TextEditingController _emailController = new TextEditingController();
   TextEditingController _passwordController = new TextEditingController();
@@ -20,7 +20,7 @@ class _LoginWidgetState extends State<Login> {
     return  Scaffold(
         body: Container(
           constraints: const BoxConstraints.expand(),
-          padding: const EdgeInsets.only(left: 20, right: 20, bottom: 200),
+          padding: const EdgeInsets.only(left: 20, right: 20, bottom: 50),
           decoration: BoxDecoration(
             image: DecorationImage(
               image: AssetImage('lib/assets/images/backgroundImage.png'),
@@ -45,34 +45,33 @@ class _LoginWidgetState extends State<Login> {
               Padding(
                 padding: const EdgeInsets.only(bottom: 20),
                 child: Text(
-                  'Login',
+                  'Sign Up',
                   style: TextStyle(
-                    fontSize: 26,
+                    fontSize: 26,height: 1.5,
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(bottom: 30),
+                padding: const EdgeInsets.only(bottom: 20),
                 child: Text(
-                  'Enter your emails and password',
+                  'Enter your credentials to continue',
                   style: TextStyle(fontSize: 16, color: Colors.black54),
                 ),
               ),
               Padding(
                 
-                padding: EdgeInsets.only(bottom: 10),
+                padding: EdgeInsets.only(bottom: 20),
                 child: TextField(
-                  controller: _emailController,
-                  style: TextStyle( height: 2,
+          
+                  style: TextStyle( height: 1.5,
                     color: Colors.black,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w100,
                   ),
                   decoration: InputDecoration(
-                    labelText: 'Email',
-                    errorText: _emailInvalid ? 'Invalid email' : null,
+                    labelText: 'First Name',
                     labelStyle: TextStyle( height: 2,
                       color: Colors.black54,
                       fontSize: 16,
@@ -82,10 +81,50 @@ class _LoginWidgetState extends State<Login> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(bottom: 10),
+                padding: EdgeInsets.only(bottom: 20),
+                child: TextField(
+                  style: TextStyle(height: 2,
+                    color: Colors.black,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w100,
+                  ),
+                  decoration: InputDecoration(
+                    labelText: 'Last Name',
+                  
+                    labelStyle: TextStyle( height: 2,
+                      color: Colors.black54,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                
+                padding: EdgeInsets.only(bottom: 20),
+                child: TextField(
+                  controller: _emailController,
+                  style: TextStyle(height: 2,
+                    color: Colors.black,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w100,
+                  ),
+                  decoration: InputDecoration(
+                    labelText: 'Username',
+                    error: _emailInvalid? Text('Invalid username'): null,
+                    labelStyle: TextStyle( height: 2,
+                      color: Colors.black54,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(bottom: 20),
                 child: TextField(
                   controller: _passwordController,
-                  style: TextStyle( height: 2,
+                  style: TextStyle(height: 2,
                     color: Colors.black,
                     fontSize: 16,
                     fontWeight: FontWeight.w400,
@@ -99,7 +138,7 @@ class _LoginWidgetState extends State<Login> {
                       });
                     },), 
                     errorText: _passwordInvalid ? 'Invalid password' : null,
-                    labelStyle: TextStyle(height: 2,
+                    labelStyle: TextStyle( height: 2,
                       color: Colors.black54,
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
@@ -107,28 +146,26 @@ class _LoginWidgetState extends State<Login> {
                   ),
                 ),
               ),
-              Container(
-                padding: EdgeInsets.only(left: 245,bottom: 30),
-                child: TextButton(
-                  onPressed: () {
-                    print('Nút được bấm!');
-                  },
-                  child: Text(
-                    'Forgot Password?',
-                    style: TextStyle(color: Colors.black54, fontSize: 14, fontWeight: FontWeight.w300),
-                  ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 30),
+                child: Text(
+                  'By continuing you agree to our Terms of Service and Privacy Policy',
+                  style: TextStyle(height: 1.5,fontSize: 14, color: Colors.black54, fontWeight: FontWeight.w100),
                 ),
               ),
               Center(
                 child: Container(
                   width: 364,
-                  height: 67,
+                  height: 87,
                   padding: EdgeInsets.only(bottom: 20),
                   child: FloatingActionButton(
-                    onPressed:()=> loginButtonPressed(),
-                    child: Text('Login',style: TextStyle(fontSize: 18),),
+                    onPressed:()=> signUpButtonPressed(),
                     backgroundColor: Color(0xFF53B175),
                     foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(19),
+                    ),
+                    child: Text('Sign Up',style: TextStyle(height: 1.5,fontSize: 18),),
                   ),
                 ),
               ),
@@ -137,7 +174,7 @@ class _LoginWidgetState extends State<Login> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    'Don’t have an account?',
+                    'Already have an account?',
                     style: TextStyle(
                       fontSize: 14,
                       color: Colors.black,
@@ -145,9 +182,9 @@ class _LoginWidgetState extends State<Login> {
                     ),
                   ),
                   TextButton(
-                    onPressed: ()=>{signUpButtonPressed()},
+                    onPressed: () => signInButtonPressed(),
                     child: Text(
-                      'SignUp',
+                      'Sign In',
                       style: TextStyle(
                         fontSize: 14,
                         color: Color(0xFF53B175),
@@ -163,7 +200,7 @@ class _LoginWidgetState extends State<Login> {
       );
     
   }
-  void loginButtonPressed() {
+  void signUpButtonPressed() {
     setState(() {
     _emailInvalid = false;
     _passwordInvalid = false;
@@ -179,8 +216,8 @@ class _LoginWidgetState extends State<Login> {
       });
     }
     if (!_emailInvalid && !_passwordInvalid) {
-      // Perform login action
-      print('Login button pressed');
+      // Perform SignUp action
+      print('SignUp button pressed');
       print('Email: ${_emailController.text}');
       print('Password: ${_passwordController.text}');
     } else {
@@ -188,12 +225,10 @@ class _LoginWidgetState extends State<Login> {
       print('Invalid email or password');
     }
   }
-  void signUpButtonPressed() {
+  void signInButtonPressed() {
     Navigator.push(
       context,
-      MaterialPageRoute(
-        builder: (context) => SignUp(),
-      ),
+      MaterialPageRoute(builder: (context) => Login()),
     );
   }
 }
