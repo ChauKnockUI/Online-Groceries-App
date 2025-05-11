@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:training_project/product_detail.dart';
 import 'package:training_project/signUp.dart';
 
 
@@ -183,6 +184,13 @@ class _LoginWidgetState extends State<Login> {
       print('Login button pressed');
       print('Email: ${_emailController.text}');
       print('Password: ${_passwordController.text}');
+      // Navigate to the next screen
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ProductDetail(),
+        ),
+      );
     } else {
       // Show error message
       print('Invalid email or password');
@@ -196,4 +204,5 @@ class _LoginWidgetState extends State<Login> {
       ),
     );
   }
+  
 }
