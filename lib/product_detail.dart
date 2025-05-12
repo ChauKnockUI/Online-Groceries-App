@@ -8,6 +8,10 @@ class ProductDetail extends StatefulWidget {
 }
 
 class _ProductDetailState extends State<ProductDetail> {
+  int _minValue = 1;
+  int _maxValue = 5;
+  int _currentValue=1;
+  bool _favourite= false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,8 +83,8 @@ class _ProductDetailState extends State<ProductDetail> {
                       ),
                     ),
                     IconButton(
-                      onPressed: () => {},
-                      icon: const Icon(Icons.favorite_border),
+                      onPressed: () => {favouriteHandle()},
+                      icon: _favourite? Icon(Icons.favorite_border_rounded, size: 30, color: Colors.red,): Icon(Icons.favorite_border_rounded, size: 30, color: Colors.black54,),
                     ),
                   ],
                 ),
@@ -100,7 +104,8 @@ class _ProductDetailState extends State<ProductDetail> {
                   children: [
                     Row(
                       children: [
-                        IconButton(onPressed: () {}, icon: Icon(Icons.remove, size:30)),
+                        
+                        IconButton(onPressed: ()=>{decreaseProductHandle()}, icon: (_currentValue>_minValue)?Icon(Icons.remove, size:30, color: Color(0xFF53B175),): Icon(Icons.remove, size:30, color: Colors.black54,)),
                         Container(
                           width: 50,
                           height: 50,
@@ -113,9 +118,15 @@ class _ProductDetailState extends State<ProductDetail> {
                               width: 1,
                             ),
                           ),
-                          child: Text('2'),
+                          child: Text(_currentValue.toString(),
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ),
-                        IconButton(onPressed: () {}, icon: Icon(Icons.add, size: 30,)),
+                        IconButton(onPressed: ()=>{increaseProductHandle()} , icon: (_currentValue<_maxValue)? Icon(Icons.add, size: 30,color: Color(0xFF53B175)):Icon(Icons.add, size: 30, color: Colors.black54,)),
                       ],
                     ),
                     Text(
@@ -247,5 +258,24 @@ class _ProductDetailState extends State<ProductDetail> {
         ),
       ),
     );
+  }
+  void increaseProductHandle(){
+    setState(() {
+      if (_currentValue < _maxValue) {
+        _currentValue++;
+      }
+    });
+  }
+  void decreaseProductHandle(){
+    setState(() {
+      if (_currentValue > _minValue) {
+        _currentValue--;
+      }
+    });
+  }
+  void favouriteHandle(){
+    setState(() {
+      _favourite = !_favourite;
+    });
   }
 }
