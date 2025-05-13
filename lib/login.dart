@@ -73,7 +73,7 @@ class _LoginWidgetState extends State<Login> {
                   ),
                   decoration: InputDecoration(
                     labelText: 'Email',
-                    errorText: _emailInvalid ? 'Invalid email' : null,
+                    errorText: _emailInvalid ? 'Please enter email in correct format' : null,
                     labelStyle: TextStyle( height: 2,
                       color: Colors.black54,
                       fontSize: 16,
@@ -169,12 +169,12 @@ class _LoginWidgetState extends State<Login> {
     _emailInvalid = false;
     _passwordInvalid = false;
   });
-    if (_emailController.text.isEmpty || !_emailController.text.contains('@') ) {
+    if (!(_emailController.text.length>11) || !_emailController.text.endsWith('@gmail.com') ) {
       setState(() {
         _emailInvalid = true;
       });
     }
-    if (_passwordController.text.isEmpty || _passwordController.text.length < 6) {
+    if (!(_passwordController.text.contains(RegExp(r'[A-Z]')))|| !(_passwordController.text.contains(RegExp(r'[a-z]')))||!(_passwordController.text.contains(RegExp(r'[0-9]'))) || _passwordController.text.length < 6) {
       setState(() {
         _passwordInvalid = true;
       });
