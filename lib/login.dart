@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:training_project/home.dart';
 import 'package:training_project/product_detail.dart';
 import 'package:training_project/signUp.dart';
 
@@ -188,7 +189,7 @@ class _LoginWidgetState extends State<Login> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => ProductDetail(),
+          builder: (context) => HomeScreen(),
         ),
       );
     } else {
