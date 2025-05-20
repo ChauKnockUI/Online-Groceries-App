@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:training_project/routers/app_routes.dart';
+import 'package:training_project/utils/globalFormat.dart';
 
 class ProductSection extends StatelessWidget {
   final String title;
@@ -49,31 +51,36 @@ class ProductSection extends StatelessWidget {
                   border: Border.all(color: Colors.grey.shade300),
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: Column(
-                  children: [
-                    Image.asset(item["image"]!, height: 100, fit: BoxFit.cover),
-                    const SizedBox(height: 20),
-                    Text(item["name"]!, style: roboto(700)),
-                    const SizedBox(height: 5),
-                    Text(item["unit"]!, style: roboto(100)),
-                    const SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(item["price"]!, style: roboto(700).copyWith(fontSize: 22)),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Color(0xFF53B175),
-                            borderRadius: BorderRadius.circular(16),
+                child: InkWell(
+                  onTap: ()=>{
+                    Navigator.pushNamed(context, AppRoutes.productDetail)
+                  },
+                  child: Column(
+                    children: [
+                      Image.asset(item["image"]!, height: 100, fit: BoxFit.cover),
+                      const SizedBox(height: 20),
+                      Text(item["name"]!, style: roboto(700)),
+                      const SizedBox(height: 5),
+                      Text(item["unit"]!, style: roboto(100)),
+                      const SizedBox(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(item["price"]!, style: roboto(700).copyWith(fontSize: 22)),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: primaryColor,
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            child: const IconButton(
+                              icon: Icon(Icons.add, color: Colors.white, size: 28),
+                              onPressed: null,
+                            ),
                           ),
-                          child: const IconButton(
-                            icon: Icon(Icons.add, color: Colors.white, size: 28),
-                            onPressed: null,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               );
             },

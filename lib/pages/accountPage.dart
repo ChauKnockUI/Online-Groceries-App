@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:training_project/login.dart';
+import 'package:training_project/routers/app_routes.dart';
 import 'package:training_project/utils/globalFormat.dart';
 
 class AccountPage extends StatelessWidget {
   const AccountPage({super.key});
   void logoutButtonHandler(BuildContext context) {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => const Login()));
+    Navigator.pushNamed(context, AppRoutes.login);
   }
   Widget buildListTile(IconData icon, String title, {VoidCallback? onTap}) {
     return ListTile(

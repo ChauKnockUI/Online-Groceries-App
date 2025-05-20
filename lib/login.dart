@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:training_project/home.dart';
-import 'package:training_project/signUp.dart';
+import 'package:training_project/routers/app_routes.dart';
 
 
 class Login extends StatefulWidget {
@@ -185,24 +184,14 @@ class _LoginWidgetState extends State<Login> {
       print('Email: ${_emailController.text}');
       print('Password: ${_passwordController.text}');
       // Navigate to the next screen
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => HomeScreen(),
-        ),
-      );
+      Navigator.pushNamed(context, AppRoutes.home);
     } else {
       // Show error message
       print('Invalid email or password');
     }
   }
   void signUpButtonPressed() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => SignUp(),
-      ),
-    );
+    Navigator.pushNamed(context, AppRoutes.signup);
   }
   
 }

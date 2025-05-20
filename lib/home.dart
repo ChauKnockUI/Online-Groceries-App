@@ -4,6 +4,7 @@ import 'package:training_project/pages/cartPage.dart';
 import 'package:training_project/pages/explorePage.dart';
 import 'package:training_project/pages/favouritePage.dart';
 import 'package:training_project/pages/homePage.dart';
+import 'package:training_project/utils/globalFormat.dart';
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -76,16 +77,6 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       body: pages[currentIndex],
-    );
-  }
-
-  TextStyle roboto(int weight) {
-    return TextStyle(
-      fontFamily: 'RobotoRoboto',
-      fontWeight: FontWeight.values.firstWhere(
-        (fw) => fw.index * 100 == weight,
-        orElse: () => FontWeight.normal,
-      ),
     );
   }
 }

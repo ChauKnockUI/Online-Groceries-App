@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:training_project/login.dart';
+import 'package:training_project/routers/app_routes.dart';
+import 'package:training_project/utils/globalFormat.dart';
 
 
 class SignUp extends StatefulWidget {
@@ -187,7 +188,7 @@ class _SignUpWidgetState extends State<SignUp> {
                       'Sign In',
                       style: TextStyle(
                         fontSize: 14,
-                        color: Color(0xFF53B175),
+                        color: primaryColor,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -216,19 +217,17 @@ class _SignUpWidgetState extends State<SignUp> {
       });
     }
     if (!_emailInvalid && !_passwordInvalid) {
-      // Perform SignUp action
+      // Perform SignUp action    
       print('SignUp button pressed');
       print('Email: ${_emailController.text}');
       print('Password: ${_passwordController.text}');
+      Navigator.pushNamed(context, AppRoutes.login);
     } else {
       // Show error message
       print('Invalid email or password');
     }
   }
   void signInButtonPressed() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => Login()),
-    );
+    Navigator.pushNamed(context, AppRoutes.login);
   }
 }

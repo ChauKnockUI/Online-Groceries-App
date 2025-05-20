@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:training_project/components/product_section.dart';
+import 'package:training_project/utils/globalFormat.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -207,13 +208,4 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  TextStyle roboto(int weight) {
-    return TextStyle(
-      fontFamily: 'Roboto',
-      fontWeight: FontWeight.values.firstWhere(
-        (fw) => fw.index * 100 == weight,
-        orElse: () => FontWeight.normal,
-      ),
-    );
-  }
 }
