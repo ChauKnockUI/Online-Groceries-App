@@ -114,7 +114,8 @@ class HomePage extends StatelessWidget {
               ).copyWith(fontSize: 20, color: Colors.black54),
               prefixIcon: Padding(
                 padding: const EdgeInsets.only(left: 15.0, top: 12, bottom: 12),
-                child: const Icon(Icons.search, color: Colors.black, size: 40),
+                // child: const Icon(Icons.search, color: Colors.black, size: 40),
+                child: IconButton(onPressed: ()=>{print("search button was clicked")}, icon:const Icon(Icons.search, color: Colors.black, size: 40)),
               ),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
@@ -208,7 +209,7 @@ class HomePage extends StatelessWidget {
 
   TextStyle roboto(int weight) {
     return TextStyle(
-      fontFamily: 'RobotoRoboto',
+      fontFamily: 'Roboto',
       fontWeight: FontWeight.values.firstWhere(
         (fw) => fw.index * 100 == weight,
         orElse: () => FontWeight.normal,

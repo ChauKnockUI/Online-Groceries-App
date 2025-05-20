@@ -12,7 +12,7 @@ class ProductSection extends StatelessWidget {
 
   TextStyle roboto(int weight) {
     return TextStyle(
-      fontFamily: 'RobotoRoboto',
+      fontFamily: 'Roboto',
       fontWeight: FontWeight.values.firstWhere(
         (fw) => fw.index * 100 == weight,
         orElse: () => FontWeight.normal,

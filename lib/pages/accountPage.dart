@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:training_project/login.dart';
-import 'package:training_project/utils/appColor.dart';
+import 'package:training_project/utils/globalFormat.dart';
 
 class AccountPage extends StatelessWidget {
   const AccountPage({super.key});
