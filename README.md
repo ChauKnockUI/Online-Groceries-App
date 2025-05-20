@@ -1,8 +1,11 @@
 # training_project
 
 ## Demo
-![Screenshot_1747061158](https://github.com/user-attachments/assets/024bc66e-65a6-4f35-a54d-e94d7d68ddea)
-![Screenshot_1747061194](https://github.com/user-attachments/assets/76781245-df08-4447-ad37-ade1a2a49605)
-![Screenshot_1747061184](https://github.com/user-attachments/assets/b9131932-5a7a-4e2f-bb5a-a0493a3ccbbf)
 
+| Login Page | Sign Up Page |
+|------------|--------------|
+| ![Login](https://github.com/user-attachments/assets/8a86c779-8d5c-42c4-acf5-b383d9cbbb58) | ![SignUp](https://github.com/user-attachments/assets/76781245-df08-4447-ad37-ade1a2a49605) |
 
+| Product Detail Page | Home Page |
+|----------------------|-----------|
+| ![Product](https://github.com/user-attachments/assets/b9131932-5a7a-4e2f-bb5a-a0493a3ccbbf) | ![Home1](https://github.com/user-attachments/assets/e2d05856-8cd2-4cdb-ad8f-8601167f28d2)<br>![Home2](https://github.com/user-attachments/assets/4ecb282b-771a-4dba-98bb-d07c39c8151b) |
