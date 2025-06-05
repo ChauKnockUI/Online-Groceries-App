@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:training_project/blocs/login/login_cubit.dart';
+import 'package:training_project/blocs/login/login_state.dart';
 import 'package:training_project/routers/app_routes.dart';
-
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -11,187 +13,224 @@ class Login extends StatefulWidget {
 
 class _LoginWidgetState extends State<Login> {
   bool showPassword = false;
-  TextEditingController _emailController = new TextEditingController();
-  TextEditingController _passwordController = new TextEditingController();
-  var _emailInvalid = false;
-  var _passwordInvalid = false;
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-        body: Container(
+    return Scaffold(
+      body: BlocListener<LoginCubit, LoginState>(
+        listener: (context, state) {
+          if (state.loginSuccess) {
+            Navigator.pushNamed(context, AppRoutes.home);
+            context
+                .read<LoginCubit>()
+                .resetSuccess(); // Reset lại sau login thành công
+          }
+        },
+        child: Container(
           constraints: const BoxConstraints.expand(),
           padding: const EdgeInsets.only(left: 20, right: 20, bottom: 200),
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage('lib/assets/images/backgroundImage.png'),
               fit: BoxFit.cover,
             ),
           ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(bottom: 70),
-                child: Center(
-                  child: SizedBox(
-                    width: 47.84,
-                    height: 55.64,
-                    child: Image.asset('lib/assets/images/carrot.png'),
-                  ),
-                ),
-              ),
-
-              Padding(
-                padding: const EdgeInsets.only(bottom: 20),
-                child: Text(
-                  'Login',
-                  style: TextStyle(
-                    fontSize: 26,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 30),
-                child: Text(
-                  'Enter your emails and password',
-                  style: TextStyle(fontSize: 16, color: Colors.black54),
-                ),
-              ),
-              Padding(
-                
-                padding: EdgeInsets.only(bottom: 10),
-                child: TextField(
-                  controller: _emailController,
-                  style: TextStyle( height: 2,
-                    color: Colors.black,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                  ),
-                  decoration: InputDecoration(
-                    labelText: 'Email',
-                    errorText: _emailInvalid ? 'Please enter email in correct format' : null,
-                    labelStyle: TextStyle( height: 2,
-                      color: Colors.black54,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
+          child: SingleChildScrollView(
+            reverse: true,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                const Padding(
+                  padding: EdgeInsets.only(bottom: 70),
+                  child: Center(
+                    child: SizedBox(
+                      width: 47.84,
+                      height: 55.64,
+                      child: Image(
+                        image: AssetImage('lib/assets/images/carrot.png'),
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(bottom: 10),
-                child: TextField(
-                  controller: _passwordController,
-                  style: TextStyle( height: 2,
-                    color: Colors.black,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                  ),
-                  obscureText: !showPassword,
-                  decoration: InputDecoration(
-                    labelText: 'Password',
-                    suffixIcon: IconButton(icon: Icon(showPassword?Icons.visibility_off:Icons.visibility, color: Colors.black54,), onPressed: () {
-                      setState(() {
-                        showPassword = !showPassword;
-                      });
-                    },), 
-                    errorText: _passwordInvalid ? 'Invalid password' : null,
-                    labelStyle: TextStyle(height: 2,
-                      color: Colors.black54,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.only(left: 245,bottom: 30),
-                child: TextButton(
-                  onPressed: () {
-                    print('Nút được bấm!');
-                  },
-                  child: Text(
-                    'Forgot Password?',
-                    style: TextStyle(color: Colors.black54, fontSize: 14, fontWeight: FontWeight.w300),
-                  ),
-                ),
-              ),
-              Center(
-                child: Container(
-                  width: 364,
-                  height: 67,
+                const Padding(
                   padding: EdgeInsets.only(bottom: 20),
-                  child: FloatingActionButton(
-                    onPressed:()=> loginButtonPressed(),
-                    child: Text('Login',style: TextStyle(fontSize: 18),),
-                    backgroundColor: Color(0xFF53B175),
-                    foregroundColor: Colors.white,
-                  ),
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    'Don’t have an account?',
+                  child: Text(
+                    'Login',
                     style: TextStyle(
-                      fontSize: 14,
+                      fontSize: 26,
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  TextButton(
-                    onPressed: ()=>{signUpButtonPressed()},
-                    child: Text(
-                      'SignUp',
+                ),
+                const Padding(
+                  padding: EdgeInsets.only(bottom: 30),
+                  child: Text(
+                    'Enter your email and password',
+                    style: TextStyle(fontSize: 16, color: Colors.black54),
+                  ),
+                ),
+
+                BlocBuilder<LoginCubit, LoginState>(
+                  builder: (context, state) {
+                    return Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 10),
+                          child: TextField(
+                            controller: _emailController,
+                            style: const TextStyle(height: 2),
+                            onChanged:
+                                (_) =>
+                                    context.read<LoginCubit>().onInputChanged(
+                                      _emailController.text,
+                                      _passwordController.text,
+                                    ),
+                            decoration: InputDecoration(
+                              labelText: 'Email',
+                              errorText:
+                                  state.isEmailInvalid
+                                      ? 'Please enter email in correct format'
+                                      : null,
+                              labelStyle: const TextStyle(
+                                height: 2,
+                                color: Colors.black54,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 10),
+                          child: TextField(
+                            controller: _passwordController,
+                            obscureText: !showPassword,
+                            style: const TextStyle(height: 2),
+                            onChanged:
+                                (_) =>
+                                    context.read<LoginCubit>().onInputChanged(
+                                      _emailController.text,
+                                      _passwordController.text,
+                                    ),
+                            decoration: InputDecoration(
+                              labelText: 'Password',
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  showPassword
+                                      ? Icons.visibility_off
+                                      : Icons.visibility,
+                                  color: Colors.black54,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    showPassword = !showPassword;
+                                  });
+                                },
+                              ),
+                              errorText:
+                                  state.isPasswordInvalid
+                                      ? 'Invalid password'
+                                      : null,
+                              labelStyle: const TextStyle(
+                                height: 2,
+                                color: Colors.black54,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
+                  },
+                ),
+
+                Container(
+                  padding: const EdgeInsets.only(left: 245, bottom: 30),
+                  child: TextButton(
+                    onPressed: () {
+                      print('Forgot Password pressed!');
+                    },
+                    child: const Text(
+                      'Forgot Password?',
                       style: TextStyle(
+                        color: Colors.black54,
                         fontSize: 14,
-                        color: Color(0xFF53B175),
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w300,
                       ),
                     ),
                   ),
-                ],
-              ),
-            ],
+                ),
+
+                Center(
+                  child: Container(
+                    width: 364,
+                    height: 67,
+                    padding: const EdgeInsets.only(bottom: 20),
+                    child: BlocBuilder<LoginCubit, LoginState>(
+                      builder: (context, state) {
+                        // Kiểm tra trạng thái để xác định có thể nhấn nút hay không
+                        return ElevatedButton(
+                          onPressed: state.isLoginButtonEnabled? () {
+                            context.read<LoginCubit>().onInputChanged(
+                              _emailController.text,
+                              _passwordController.text,
+                            );
+                            context.read<LoginCubit>().login(
+                              _emailController.text,
+                              _passwordController.text,
+                            ); // thực hiện đăng nhập
+                          }: null,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: state.isLoginButtonEnabled? const Color(0xFF53B175): Colors.grey,
+                            foregroundColor: Colors.white,
+                            minimumSize: const Size(double.infinity, 60),
+                          ),
+                          child: const Text(
+                            'Login',
+                            style: TextStyle(fontSize: 18),
+                          ),
+                        );
+                      }
+                    ),
+                  ),
+                ),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      'Don’t have an account?',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, AppRoutes.signup);
+                      },
+                      child: const Text(
+                        'SignUp',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Color(0xFF53B175),
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
-      );
-    
+      ),
+    );
   }
-  void loginButtonPressed() {
-    setState(() {
-    _emailInvalid = false;
-    _passwordInvalid = false;
-  });
-    if (!(_emailController.text.length>11) || !_emailController.text.endsWith('@gmail.com') ) {
-      setState(() {
-        _emailInvalid = true;
-      });
-    }
-    if (!(_passwordController.text.contains(RegExp(r'[A-Z]')))|| !(_passwordController.text.contains(RegExp(r'[a-z]')))||!(_passwordController.text.contains(RegExp(r'[0-9]'))) || _passwordController.text.length < 6) {
-      setState(() {
-        _passwordInvalid = true;
-      });
-    }
-    if (!_emailInvalid && !_passwordInvalid) {
-      // Perform login action
-      print('Login button pressed');
-      print('Email: ${_emailController.text}');
-      print('Password: ${_passwordController.text}');
-      // Navigate to the next screen
-      Navigator.pushNamed(context, AppRoutes.home);
-    } else {
-      // Show error message
-      print('Invalid email or password');
-    }
-  }
-  void signUpButtonPressed() {
-    Navigator.pushNamed(context, AppRoutes.signup);
-  }
-  
 }
