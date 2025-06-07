@@ -4,17 +4,17 @@ import 'login_state.dart';
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit() : super(LoginState.initial());
 
-  void login(String email, String password) {
+  void login(String email, String password) async {
+    emit(state.copyWith(isLoading: true));
+    await Future.delayed(
+      const Duration(seconds: 1, milliseconds: 500),
+    ); // Simulate network delay
     bool emailInvalid = !(email.length > 11 && email.endsWith('@gmail.com'));
     bool passwordInvalid =
         !RegExp(r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{6,}$').hasMatch(password);
 
     if (!emailInvalid && !passwordInvalid) {
-      emit(
-        state.copyWith(
-          loginSuccess: true,
-        ),
-      );
+      emit(state.copyWith(loginSuccess: true, isLoading: false));
     } else {
       emit(
         state.copyWith(
