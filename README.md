@@ -1,7 +1,8 @@
-# training_project
+# Online Groceries App
 
 ## Demo
 
+---
 
 ### Login and Sign Up Pages
 
@@ -11,10 +12,18 @@
 
 ---
 
+### Loading Page
+
+| Loading Screen |
+|----------------|
+| ![Loading](https://github.com/user-attachments/assets/eab4da2f-af85-47fa-a74a-60d6acc1b145) |
+
+---
+
 ### Product Detail and Home Pages
 
 | Product Detail Page | Home Page |
-|--------------------|-----------|
+|---------------------|-----------|
 | ![Product](https://github.com/user-attachments/assets/b9131932-5a7a-4e2f-bb5a-a0493a3ccbbf)<br>![Product Additional](https://github.com/user-attachments/assets/c6c2094c-b8e9-492a-89c4-92c3595bedbd) | ![Home1](https://github.com/user-attachments/assets/e2d05856-8cd2-4cdb-ad8f-8601167f28d2)<br>![Home2](https://github.com/user-attachments/assets/4ecb282b-771a-4dba-98bb-d07c39c8151b) |
 
 ---
