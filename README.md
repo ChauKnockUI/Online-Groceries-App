@@ -27,3 +27,11 @@
 | ![Product](https://github.com/user-attachments/assets/b9131932-5a7a-4e2f-bb5a-a0493a3ccbbf)<br>![Product Additional](https://github.com/user-attachments/assets/c6c2094c-b8e9-492a-89c4-92c3595bedbd) | ![Home1](https://github.com/user-attachments/assets/e2d05856-8cd2-4cdb-ad8f-8601167f28d2)<br>![Home2](https://github.com/user-attachments/assets/4ecb282b-771a-4dba-98bb-d07c39c8151b) |
 
 ---
+
+### Cart Pages
+
+| Cart Page | Food Type Dropdown Page |
+|-----------|--------------------------|
+| ![Cart](https://github.com/user-attachments/assets/eea4f358-b300-4fb8-91bc-c62000cf4c5b) | ![Dropdown](https://github.com/user-attachments/assets/b0bbe9e4-a65b-489f-90e2-a408f652961e) |
+
+---
