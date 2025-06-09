@@ -32,6 +32,6 @@
 
 | Cart Page | Food Type Dropdown Page |
 |-----------|--------------------------|
-| ![Cart](https://github.com/user-attachments/assets/eea4f358-b300-4fb8-91bc-c62000cf4c5b) | ![Dropdown](https://github.com/user-attachments/assets/b0bbe9e4-a65b-489f-90e2-a408f652961e) |
+| ![Cart](https://github.com/user-attachments/assets/eea4f358-b300-4fb8-91bc-c62000cf4c5b)<br>![Screenshot_1749488081](https://github.com/user-attachments/assets/4d89c6af-66e4-4a60-9ba1-a5c4ec667e2a) | ![Dropdown](https://github.com/user-attachments/assets/b0bbe9e4-a65b-489f-90e2-a408f652961e)<br>![Screenshot_1749488090](https://github.com/user-attachments/assets/05751362-2da7-441d-a633-0cd35a134580) |
 
 ---
