@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:training_project/blocs/cart/cart_cubit.dart';
 import 'package:training_project/home.dart';
 import 'package:training_project/login.dart';
 import 'package:training_project/pages/accountPage.dart';
@@ -23,7 +24,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [BlocProvider(create: (_) => LoginCubit())],
+      providers: [
+        BlocProvider(create: (_) => LoginCubit()),
+        BlocProvider(create: (_) => CartCubit()), 
+      ],
       child: MaterialApp(
         title: 'My App',
         theme: ThemeData(fontFamily: 'Roboto', primarySwatch: Colors.blue),

@@ -7,6 +7,8 @@ class CustomDropdown extends StatelessWidget {
   final List<Map<String, dynamic>> items;
   final String name;
   final bool showSelectButton;
+  final double? width;
+  final double? height;
   final Function(Map<String, dynamic>)? onSelect;
 
   const CustomDropdown({
@@ -15,10 +17,15 @@ class CustomDropdown extends StatelessWidget {
     required this.name,
     this.showSelectButton = true,
     this.onSelect,
+    this.width,
+    this.height,
   });
 
   @override
   Widget build(BuildContext context) {
+    final double containerWidth = width ?? MediaQuery.of(context).size.width;
+    final double listHeight = height ?? 310;
+
     return BlocProvider(
       create: (_) => CustomDropdownCubit(),
       child: BlocBuilder<CustomDropdownCubit, CustomDropdownState>(
@@ -29,6 +36,7 @@ class CustomDropdown extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
+                width: containerWidth,
                 decoration: BoxDecoration(
                   color: const Color(0xFF53B175),
                   borderRadius: const BorderRadius.only(
@@ -42,11 +50,19 @@ class CustomDropdown extends StatelessWidget {
                   children: [
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+                      children: showSelectButton? [
                         Text(name, style: const TextStyle(color: Colors.white)),
                         const SizedBox(height: 4),
                         Text(
-                          state.selectedItem ?? "Select $name",
+                           "Select $name",
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ]: [
+                        Text(
+                          name,
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
@@ -68,7 +84,8 @@ class CustomDropdown extends StatelessWidget {
               ),
               if (state.isExpanded)
                 Container(
-                  height: 310,
+                  width: containerWidth,
+                  height: listHeight,
                   decoration: const BoxDecoration(
                     color: Color(0xFF53B175),
                     borderRadius: BorderRadius.only(
@@ -88,47 +105,77 @@ class CustomDropdown extends StatelessWidget {
                           horizontal: 12,
                           vertical: 8,
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                if (item['image'] != null)
-                                  Image.asset(
-                                    item['image'],
-                                    width: 60,
-                                    height: 50,
+                        child: showSelectButton
+                            ? Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: [
+                                      if (item['image'] != null)
+                                        Image.asset(
+                                          item['image'],
+                                          width: 60,
+                                          height: 50,
+                                        ),
+                                      const SizedBox(width: 12),
+                                      Text(
+                                        itemName,
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 14,
+                                        ),
+                                        textAlign: TextAlign.left,
+                                      ),
+                                    ],
                                   ),
-                                const SizedBox(width: 12),
-                                Text(
-                                  itemName,
-                                  style: const TextStyle(color: Colors.white, fontSize: 14),
-                                  textAlign: TextAlign.left,
-                                ),
-                              ],
-                            ),
-                            if (showSelectButton)
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 20,
-                                    vertical: 5,
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 20,
+                                        vertical: 5,
+                                      ),
+                                      textStyle: const TextStyle(
+                                        fontSize: 14,
+                                      ),
+                                      backgroundColor: Colors.white,
+                                      foregroundColor: Colors.green,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                    ),
+                                    onPressed: () {
+                                      cubit.selectItem(itemName);
+                                      onSelect?.call(item);
+                                    },
+                                    child: const Text("Select"),
                                   ),
-                                  textStyle: const TextStyle(fontSize: 14),
-                                  backgroundColor: Colors.white,
-                                  foregroundColor: Colors.green,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                ),
-                                onPressed: () {
+                                ],
+                              )
+                            : InkWell(
+                                onTap: () {
                                   cubit.selectItem(itemName);
                                   onSelect?.call(item);
                                 },
-                                child: const Text("Select"),
+                                child: Row(
+                                  children: [
+                                    if (item['image'] != null)
+                                      Image.asset(
+                                        item['image'],
+                                        width: 60,
+                                        height: 50,
+                                      ),
+                                    const SizedBox(width: 12),
+                                    Text(
+                                      itemName,
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14,
+                                      ),
+                                      textAlign: TextAlign.left,
+                                    ),
+                                  ],
+                                ),
                               ),
-                          ],
-                        ),
                       );
                     },
                   ),
