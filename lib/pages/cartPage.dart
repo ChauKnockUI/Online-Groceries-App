@@ -14,7 +14,7 @@ class CartPage extends StatelessWidget {
         "name": "Fruits & Vegetables",
         "image": "lib/assets/images/vegetable.png",
         "desc":
-            "High in vitamins (especially vitamin C and folate), dietary fiber and various antioxidants. Support immune function, aid digestion, and help reduce chronic‑disease risk. Rich in fiber, vitamins A, K, folate, and minerals like potassium and magnesium.",
+            "High in vitamins (especially vitamin C and folate), dietary fiber and various antioxidants. Support immune function, aid digestion, and help reduce chronic-disease risk. Rich in fiber, vitamins A, K, folate, and minerals like potassium and magnesium.",
         "subItems": [
           {
             "name": "Bananas",
@@ -186,21 +186,24 @@ class CartPage extends StatelessWidget {
         ],
       },
     ];
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Padding(
-            padding: const EdgeInsets.only(top: 10, bottom: 20.0),
-            child: Text('My Cart', style: roboto(700).copyWith(fontSize: 22)),
-          ),
-          centerTitle: true,
-          bottom: PreferredSize(
-            preferredSize: Size.fromHeight(1.0),
-            child: Divider(height: 1, thickness: 1, color: Color(0xFFE2E2E2)),
-          ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Padding(
+          padding: const EdgeInsets.only(top: 10, bottom: 20.0),
+          child: Text('My Cart', style: roboto(700).copyWith(fontSize: 22)),
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(16),
+        centerTitle: true,
+        bottom: PreferredSize(
+          preferredSize: Size.fromHeight(1.0),
+          child: Divider(height: 1, thickness: 1, color: Color(0xFFE2E2E2)),
+        ),
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            minHeight: MediaQuery.of(context).size.height - 56, 
+          ),
           child: Column(
             children: [
               CustomDropdown(
@@ -211,9 +214,9 @@ class CartPage extends StatelessWidget {
                 },
               ),
               const SizedBox(height: 20),
-              Expanded(
-                child: BlocBuilder<CartCubit, Map<String, dynamic>?>(
-                  builder: (context, selectedCategory) {
+              BlocBuilder<CartCubit, Map<String, dynamic>?>(
+                  builder: (context, state) {
+                    final selectedCategory = state!["category"];
                     if (selectedCategory == null) {
                       return const Center(
                         child: Text("Chọn loại thực phẩm để xem chi tiết"),
@@ -253,11 +256,134 @@ class CartPage extends StatelessWidget {
                           showSelectButton: false,
                           width: 210,
                           height: 280,
+                          onSelect: (value) {
+                            context.read<CartCubit>().addItem(
+                              value,
+                              selectedCategory["name"],
+                            );
+                          },
+                        ),
+                        const SizedBox(height: 20),
+                        BlocBuilder<CartCubit, Map<String, dynamic>>(
+                          builder: (context, state) {
+                            final cartItems =
+                                (state["cartItems"] ?? [])
+                                    as List<Map<String, dynamic>>;
+                            if (cartItems.isEmpty) {
+                              return const Text(
+                                "Chưa có sản phẩm nào trong giỏ hàng.",
+                              );
+                            }
+          
+                            // Nhóm item theo categoryName
+                            final Map<String, List<Map<String, dynamic>>>
+                            grouped = {};
+                            for (var cartItem in cartItems) {
+                              final cat = cartItem["categoryName"] ?? "Khác";
+                              if (!grouped.containsKey(cat)) grouped[cat] = [];
+                              grouped[cat]!.add(cartItem);
+                            }
+          
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                ...List.generate(grouped.entries.length, (catIndex) {
+                                  final entry = grouped.entries.elementAt(catIndex);
+                                  return Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        entry.key,
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                      ...List.generate(entry.value.length, (index) {
+                                        final cartItem = entry.value[index];
+                                        final item = cartItem["item"];
+                                        final quantity = cartItem["quantity"];
+                                        return Column(
+                                          children: [
+                                            ListTile(
+                                              leading: Image.asset(
+                                                item["image"],
+                                                width: 50,
+                                                height: 50,
+                                              ),
+                                              title: Text(item["name"]),
+                                              subtitle: Text(item["price"]),
+                                              trailing: Row(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  quantity==1? IconButton(
+                                                    icon: const Icon(
+                                                      Icons.remove, color: Colors.red, size: 30,
+                                                    ),
+                                                    onPressed: () {
+                                                      context
+                                                          .read<CartCubit>()
+                                                          .decreaseQuantity(
+                                                            item["name"],
+                                                          );
+                                                    },
+                                                  ) : IconButton(
+                                                    icon: const Icon(Icons.remove, color: Colors.green, size: 30,), 
+                                                    onPressed: () {
+                                                      context
+                                                          .read<CartCubit>()
+                                                          .decreaseQuantity(
+                                                            item["name"],
+                                                          );
+                                                    },
+                                                  ),
+                                                  Container(
+                                                    width: 50,
+                                                    height: 50,
+                                                    alignment: Alignment.center,
+                                                    decoration: BoxDecoration(
+                                            
+                                                      border: Border.all(
+                                                        color: Colors.black26,
+                                                        width: 1,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(18),
+                                                    ),
+                                                    child: Text('$quantity', style: roboto(700).copyWith(fontSize: 18),)),
+                                                  IconButton(
+                                                    icon: const Icon(Icons.add, color: Colors.green, size: 30,), 
+                                                    onPressed: () {
+                                                      context
+                                                          .read<CartCubit>()
+                                                          .increaseQuantity(
+                                                            item["name"],
+                                                          );
+                                                    },
+                                                  ),
+                                                ],
+                                              ),
+                                              
+                                            ),
+                                            if (index < entry.value.length - 1)
+                                              const Divider(),
+                                          ],
+                                        );
+                                      }).toList(),
+                                      const SizedBox(height: 10),
+                                      if (catIndex < grouped.entries.length - 1)
+                                        const Divider(color: Color(0xFF53B175)),
+                                    ],
+                                  );
+                                }),
+                              ],
+                            );
+                          },
                         ),
                       ],
                     );
                   },
-                ),
+                
               ),
             ],
           ),
