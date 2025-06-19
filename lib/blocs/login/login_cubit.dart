@@ -45,4 +45,8 @@ class LoginCubit extends Cubit<LoginState> {
       ),
     );
   }
+
+  void toggleShowPassword() {
+    emit(state.copyWith(showPassword: !state.showPassword));
+  }
 }

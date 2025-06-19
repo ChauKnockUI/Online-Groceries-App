@@ -5,20 +5,13 @@ import 'package:training_project/blocs/login/login_state.dart';
 import 'package:training_project/components/loading_screen.dart';
 import 'package:training_project/routers/app_routes.dart';
 
-class Login extends StatefulWidget {
+class Login extends StatelessWidget {
   const Login({super.key});
 
   @override
-  State<Login> createState() => _LoginWidgetState();
-}
-
-class _LoginWidgetState extends State<Login> {
-  bool showPassword = false;
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-
-  @override
   Widget build(BuildContext context) {
+    final TextEditingController _emailController = TextEditingController();
+    final TextEditingController _passwordController = TextEditingController();
     return Scaffold(
       body: BlocListener<LoginCubit, LoginState>(
         listener: (context, state) {
@@ -112,7 +105,7 @@ class _LoginWidgetState extends State<Login> {
                               padding: const EdgeInsets.only(bottom: 10),
                               child: TextField(
                                 controller: _passwordController,
-                                obscureText: !showPassword,
+                                obscureText: !state.showPassword,
                                 style: const TextStyle(height: 2),
                                 onChanged:
                                     (_) => context
@@ -125,15 +118,13 @@ class _LoginWidgetState extends State<Login> {
                                   labelText: 'Password',
                                   suffixIcon: IconButton(
                                     icon: Icon(
-                                      showPassword
+                                      state.showPassword
                                           ? Icons.visibility_off
                                           : Icons.visibility,
                                       color: Colors.black54,
                                     ),
                                     onPressed: () {
-                                      setState(() {
-                                        showPassword = !showPassword;
-                                      });
+                                      context.read<LoginCubit>().toggleShowPassword();
                                     },
                                   ),
                                   errorText:
