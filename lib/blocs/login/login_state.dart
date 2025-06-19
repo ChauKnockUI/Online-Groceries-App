@@ -4,6 +4,7 @@ class LoginState {
   final bool loginSuccess;
   final bool isLoginButtonEnabled;
   final bool isLoading;
+  final bool showPassword;
 
   LoginState({
     this.isEmailInvalid = false,
@@ -11,6 +12,7 @@ class LoginState {
     this.loginSuccess = false,
     this.isLoginButtonEnabled = false,
     this.isLoading = false,
+    this.showPassword = false,
   });
 
   factory LoginState.initial() {
@@ -20,6 +22,7 @@ class LoginState {
       loginSuccess: false,
       isLoginButtonEnabled: false,
       isLoading: false,
+      showPassword: false,
     );
   }
 
@@ -29,6 +32,7 @@ class LoginState {
     bool? loginSuccess,
     bool? isLoginButtonEnabled,
     bool? isLoading,
+    bool? showPassword,
   }) {
     return LoginState(
       isEmailInvalid: isEmailInvalid ?? this.isEmailInvalid,
@@ -36,6 +40,7 @@ class LoginState {
       loginSuccess: loginSuccess ?? this.loginSuccess,
       isLoginButtonEnabled: isLoginButtonEnabled ?? this.isLoginButtonEnabled,
       isLoading: isLoading ?? this.isLoading,
+      showPassword: showPassword ?? this.showPassword,
     );
   }
 }
