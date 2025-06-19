@@ -12,7 +12,6 @@ import 'package:training_project/routers/app_routes.dart';
 import 'package:training_project/signUp.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:training_project/blocs/login/login_cubit.dart';
-import 'package:training_project/blocs/login/login_state.dart';
 
 void main() {
   runApp(const MyApp());

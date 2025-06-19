@@ -1,24 +1,43 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:training_project/blocs/data/signUp/register_request.dart';
 import 'signup_state.dart';
 
 class SignUpCubit extends Cubit<SignUpState> {
   SignUpCubit() : super(SignUpState.initial());
-
-  void signUp(String email, String password) async {
+  final Dio dio = Dio();
+  Future <void> signUp(
+    String firstName,
+    String lastName,
+    String email,
+    String password,
+  ) async {
     emit(state.copyWith(isLoading: true));
-    await Future.delayed(const Duration(seconds: 1, milliseconds: 500));
-    bool emailInvalid = !(email.contains('@'));
-    bool passwordInvalid = password.length < 6;
-
-    if (!emailInvalid && !passwordInvalid) {
-      emit(state.copyWith(signUpSuccess: true, isLoading: false));
-    } else {
-      emit(state.copyWith(
-        isEmailInvalid: emailInvalid,
-        isPasswordInvalid: passwordInvalid,
-        signUpSuccess: false,
-        isLoading: false,
-      ));
+    try {
+      final response = await dio.post(
+        'https://us-central1-skin-scanner-3c419.cloudfunctions.net/api/auth-service/register',
+        data:
+            RegisterRequest(
+              username: email,
+              firstname: firstName,
+              lastname: lastName,
+              email: email,
+              password: password,
+            ).toJson(),
+      );
+      if (response.statusCode == 201) {
+        print('Đăng ký thành công!');
+        emit(state.copyWith(signUpSuccess: true, isLoading: false));
+      } else {
+        print('Đăng ký thất bại: mã lỗi ${response.statusCode}');
+      }
+    } catch (e) {
+      emit(
+        state.copyWith(
+          signUpSuccess: false,
+          isLoading: false,
+        ),
+      );
     }
   }
 
@@ -31,10 +50,12 @@ class SignUpCubit extends Cubit<SignUpState> {
     final isPasswordValid = RegExp(
       r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{6,}$',
     ).hasMatch(password);
-    emit(state.copyWith(
-      isEmailInvalid: !isEmailValid,
-      isPasswordInvalid:  !isPasswordValid,
-      isSignUpButtonEnabled: isEmailValid && isPasswordValid,
-    ));
+    emit(
+      state.copyWith(
+        isEmailInvalid: !isEmailValid,
+        isPasswordInvalid: !isPasswordValid,
+        isSignUpButtonEnabled: isEmailValid && isPasswordValid,
+      ),
+    );
   }
-} 
+}
