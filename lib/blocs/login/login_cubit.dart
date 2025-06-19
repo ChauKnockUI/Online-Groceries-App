@@ -21,6 +21,7 @@ class LoginCubit extends Cubit<LoginState> {
           isEmailInvalid: emailInvalid,
           isPasswordInvalid: passwordInvalid,
           loginSuccess: false,
+          isLoading: false,
         ),
       );
     }
