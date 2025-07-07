@@ -1,31 +1,40 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:training_project/blocs/cart/cart_cubit.dart';
-import 'package:training_project/home.dart';
-import 'package:training_project/login.dart';
-import 'package:training_project/pages/accountPage.dart';
-import 'package:training_project/pages/cartPage.dart';
-import 'package:training_project/pages/explorePage.dart';
-import 'package:training_project/pages/favouritePage.dart';
-import 'package:training_project/pages/homePage.dart';
-import 'package:training_project/product_detail.dart';
-import 'package:training_project/routers/app_routes.dart';
-import 'package:training_project/signUp.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:training_project/blocs/login/login_cubit.dart';
+import 'package:training_project/presentation/blocs/login/login_cubit.dart';
+import 'package:training_project/presentation/blocs/cart/cart_cubit.dart';
+import 'package:training_project/presentation/pages/home.dart';
+import 'package:training_project/presentation/pages/login.dart';
+import 'package:training_project/presentation/pages/signUp.dart';
+import 'package:training_project/presentation/pages/accountPage.dart';
+import 'package:training_project/presentation/pages/cartPage.dart';
+import 'package:training_project/presentation/pages/explorePage.dart';
+import 'package:training_project/presentation/pages/favouritePage.dart';
+import 'package:training_project/presentation/pages/homePage.dart';
+import 'package:training_project/presentation/pages/product_detail.dart';
+import 'package:training_project/presentation/routers/app_routes.dart';
+import 'package:training_project/data/datasources/auth_remote_data_source.dart';
+import 'package:training_project/data/repositories/auth_repository_impl.dart';
+import 'package:training_project/domain/usecases/login_user.dart';
 
 void main() {
-  runApp(const MyApp());
+  
+  final authRepository = AuthRepositoryImpl(AuthRemoteDataSource( Dio()));
+  final loginUser = LoginUser(authRepository);
+
+  runApp(MyApp(loginUser: loginUser));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final LoginUser loginUser;
+  const MyApp({super.key, required this.loginUser});
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => LoginCubit()),
-        BlocProvider(create: (_) => CartCubit()), 
+        BlocProvider(create: (_) => LoginCubit(loginUser)),
+        BlocProvider(create: (_) => CartCubit()),
       ],
       child: MaterialApp(
         title: 'My App',

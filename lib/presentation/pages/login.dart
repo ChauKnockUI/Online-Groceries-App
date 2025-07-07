@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:training_project/blocs/login/login_cubit.dart';
-import 'package:training_project/blocs/login/login_state.dart';
-import 'package:training_project/components/loading_screen.dart';
-import 'package:training_project/routers/app_routes.dart';
+import 'package:training_project/presentation/blocs/login/login_cubit.dart';
+import 'package:training_project/presentation/blocs/login/login_state.dart';
+import 'package:training_project/presentation/components/loading_screen.dart';
+import 'package:training_project/presentation/routers/app_routes.dart';
 
 class Login extends StatelessWidget {
   const Login({super.key});

@@ -1,9 +1,13 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:training_project/routers/app_routes.dart';
+import 'package:training_project/data/datasources/auth_remote_data_source.dart';
+import 'package:training_project/data/repositories/auth_repository_impl.dart';
+import 'package:training_project/domain/usecases/sign_up_user.dart';
+import 'package:training_project/presentation/routers/app_routes.dart';
 import 'package:training_project/utils/globalFormat.dart';
-import 'blocs/signup/signup_cubit.dart';
-import 'blocs/signup/signup_state.dart';
+import 'package:training_project/presentation/blocs/signup/signup_cubit.dart';
+import 'package:training_project/presentation/blocs/signup/signup_state.dart';
 
 class SignUp extends StatelessWidget {
   SignUp({super.key});
@@ -16,7 +20,10 @@ class SignUp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => SignUpCubit(),
+      create:
+          (_) => SignUpCubit(
+            SignUpUser(AuthRepositoryImpl(AuthRemoteDataSource(Dio()))),
+          ),
       child: BlocListener<SignUpCubit, SignUpState>(
         listener: (context, state) {
           if (state.signUpSuccess) {

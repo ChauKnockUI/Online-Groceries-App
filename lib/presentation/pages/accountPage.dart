@@ -1,8 +1,14 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:training_project/blocs/profile/profile_cubit.dart';
-import 'package:training_project/blocs/profile/profile_state.dart';
-import 'package:training_project/routers/app_routes.dart';
+import 'package:training_project/data/datasources/profile_local_data_source.dart';
+import 'package:training_project/data/datasources/profile_remote_data_source.dart';
+import 'package:training_project/data/repositories/profile_repository_impl.dart';
+import 'package:training_project/domain/usecases/delete_account.dart';
+import 'package:training_project/domain/usecases/get_profile.dart';
+import 'package:training_project/presentation/blocs/profile/profile_cubit.dart';
+import 'package:training_project/presentation/blocs/profile/profile_state.dart';
+import 'package:training_project/presentation/routers/app_routes.dart';
 import 'package:training_project/utils/globalFormat.dart';
 
 class AccountPage extends StatelessWidget {
@@ -29,7 +35,21 @@ class AccountPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => ProfileCubit()..fetchProfile(),
+      create:
+          (_) => ProfileCubit(
+            GetProfile(
+              ProfileRepositoryImpl(
+                remoteDataSource: ProfileRemoteDataSource(Dio()),
+                localDataSource: ProfileLocalDataSource(),
+              ),
+            ),
+            DeleteAccount(
+              ProfileRepositoryImpl(
+                remoteDataSource: ProfileRemoteDataSource(Dio()),
+                localDataSource: ProfileLocalDataSource(),
+              ),
+            ),
+          )..fetchProfile(),
       child: BlocBuilder<ProfileCubit, ProfileState>(
         builder: (context, state) {
           return Scaffold(
@@ -63,7 +83,10 @@ class AccountPage extends StatelessWidget {
                                     ),
                                   ),
                                   const SizedBox(width: 8),
-                                  const Icon(Icons.edit_outlined, color: primaryColor),
+                                  const Icon(
+                                    Icons.edit_outlined,
+                                    color: primaryColor,
+                                  ),
                                 ],
                               ),
                               const SizedBox(height: 4),
@@ -111,17 +134,19 @@ class AccountPage extends StatelessWidget {
                             borderRadius: BorderRadius.circular(12),
                           ),
                         ),
-                        onPressed: state.isLoading
-                            ? null
-                            : () {
-                                context.read<ProfileCubit>().deleteAccount();
-                              },
-                        child: state.isLoading
-                            ? const CircularProgressIndicator()
-                            : const Text(
-                                "Delete",
-                                style: TextStyle(color: Colors.white),
-                              ),
+                        onPressed:
+                            state.isLoading
+                                ? null
+                                : () {
+                                  context.read<ProfileCubit>().deleteAccount();
+                                },
+                        child:
+                            state.isLoading
+                                ? const CircularProgressIndicator()
+                                : const Text(
+                                  "Delete",
+                                  style: TextStyle(color: Colors.white),
+                                ),
                       ),
                     ),
                     const SizedBox(height: 10),

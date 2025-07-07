@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:training_project/blocs/cart/cart_cubit.dart';
-import 'package:training_project/components/custom_dropdown.dart';
+import 'package:training_project/presentation/blocs/cart/cart_cubit.dart';
+import 'package:training_project/presentation/components/custom_dropdown.dart';
 import 'package:training_project/utils/globalFormat.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

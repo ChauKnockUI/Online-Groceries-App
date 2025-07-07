@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:training_project/components/product_section.dart';
+import 'package:training_project/presentation/components/product_section.dart';
 import 'package:training_project/utils/globalFormat.dart';
 
 class HomePage extends StatelessWidget {
