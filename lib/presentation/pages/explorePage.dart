@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:training_project/components/card_section.dart';
+import 'package:training_project/presentation/components/card_section.dart';
 import 'package:training_project/utils/globalFormat.dart';
 
 class ExplorePage extends StatefulWidget {

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:training_project/pages/accountPage.dart';
-import 'package:training_project/pages/cartPage.dart';
-import 'package:training_project/pages/explorePage.dart';
-import 'package:training_project/pages/favouritePage.dart';
-import 'package:training_project/pages/homePage.dart';
+import 'package:training_project/presentation/pages/accountPage.dart';
+import 'package:training_project/presentation/pages/cartPage.dart';
+import 'package:training_project/presentation/pages/explorePage.dart';
+import 'package:training_project/presentation/pages/favouritePage.dart';
+import 'package:training_project/presentation/pages/homePage.dart';
 import 'package:training_project/utils/globalFormat.dart';
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

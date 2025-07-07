@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:training_project/routers/app_routes.dart';
+import 'package:training_project/presentation/routers/app_routes.dart';
 import 'package:training_project/utils/globalFormat.dart';
 
 class ProductSection extends StatelessWidget {

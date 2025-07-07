@@ -1,12 +1,12 @@
-import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:training_project/blocs/data/signUp/register_request.dart';
 import 'signup_state.dart';
+import 'package:training_project/domain/usecases/sign_up_user.dart';
 
 class SignUpCubit extends Cubit<SignUpState> {
-  SignUpCubit() : super(SignUpState.initial());
-  final Dio dio = Dio();
-  Future <void> signUp(
+  final SignUpUser signUpUser;
+  SignUpCubit(this.signUpUser) : super(SignUpState.initial());
+
+  Future<void> signUp(
     String firstName,
     String lastName,
     String email,
@@ -14,23 +14,13 @@ class SignUpCubit extends Cubit<SignUpState> {
   ) async {
     emit(state.copyWith(isLoading: true));
     try {
-      final response = await dio.post(
-        'https://us-central1-skin-scanner-3c419.cloudfunctions.net/api/auth-service/register',
-        data:
-            RegisterRequest(
-              username: email,
-              firstname: firstName,
-              lastname: lastName,
-              email: email,
-              password: password,
-            ).toJson(),
+      await signUpUser(
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        password: password,
       );
-      if (response.statusCode == 201) {
-        print('Đăng ký thành công!');
-        emit(state.copyWith(signUpSuccess: true, isLoading: false));
-      } else {
-        print('Đăng ký thất bại: mã lỗi ${response.statusCode}');
-      }
+      emit(state.copyWith(signUpSuccess: true, isLoading: false));
     } catch (e) {
       emit(
         state.copyWith(
