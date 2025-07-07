@@ -1,5 +1,3 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
-
 class CustomDropdownState {
   final bool isExpanded;
   final String? selectedItem;

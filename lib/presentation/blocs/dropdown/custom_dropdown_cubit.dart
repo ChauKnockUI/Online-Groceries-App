@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:training_project/blocs/dropdown/custom_dropdown_state.dart';
+import 'package:training_project/presentation/blocs/dropdown/custom_dropdown_state.dart';
 
 class CustomDropdownCubit extends Cubit<CustomDropdownState> {
   CustomDropdownCubit() : super(CustomDropdownState());
